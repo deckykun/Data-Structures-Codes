@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/*	--------------------	 COMANDOS DE PILHAS DE FILAS ENCADEADAS		------------------	*/
+
+ typedef struct stack Stack;
+ typedef struct node Node;
+
+  struct node {
+    int item;
+    Node *nextNode;
+  };
+
+  struct stack {
+  	int size;
+    Node *top;
+  };
+
+/*	--------------------------------------------------------------------------------------	*/
+
+Stack* createStack() {
+  Stack *stack = (Stack*) malloc(sizeof(Stack));
+  stack->top = NULL;
+  stack->size = 0;
+  return stack;
+}
+
+void push(Stack *stack, int item) {
+  Node *newTop = (Node*) malloc(sizeof(Node));
+  newTop->item = item;
+  newTop->nextNode = stack->top;
+  stack->size += 1;
+  stack->top = newTop;
+}
+
+int pop(Stack *stack) {
+  if (isEmpty(stack)) return -1;
+
+  Node *return_top = (Node*) malloc(sizeof(Node));
+  int item = stack->top->item;
+  stack->top = stack->top->nextNode;
+  stack->size -= 1;
+  free(return_top);
+  return item;
+}
+
+int peek(Stack *stack) {
+  if(isEmpty(stack)) return -1;
+
+  else return stack->top->item;
+}
+
+int isEmpty(Stack *stack) {
+  return (stack->top == NULL);
+}
